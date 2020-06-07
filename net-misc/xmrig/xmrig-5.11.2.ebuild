@@ -15,6 +15,7 @@ KEYWORDS="~amd64"
 IUSE="ssl"
 
 DEPEND="
+		dev-libs/libuv
 		sys-apps/hwloc
 		ssl? ( dev-libs/openssl )"
 
