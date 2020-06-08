@@ -1,0 +1,23 @@
+From 3aa1a0300bfdac4e42a3ac8bc177169d5abd96dc Mon Sep 17 00:00:00 2001
+From: Matt Smith <matt@offtopica.uk>
+Date: Mon, 8 Jun 2020 08:47:28 +0100
+Subject: [PATCH] Don't suffix binary with -notls
+
+---
+ cmake/OpenSSL.cmake | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/cmake/OpenSSL.cmake b/cmake/OpenSSL.cmake
+index c05ee86..fdcc847 100644
+--- a/cmake/OpenSSL.cmake
++++ b/cmake/OpenSSL.cmake
+@@ -56,6 +56,4 @@ else()
+             src/base/net/http/HttpServer.h
+             )
+     endif()
+-
+-    set(CMAKE_PROJECT_NAME "${CMAKE_PROJECT_NAME}-notls")
+ endif()
+-- 
+2.27.0
+
