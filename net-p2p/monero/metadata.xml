@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>matt@offtopica.uk</email>
+    <name>Matt Smith</name>
+  </maintainer>
+  <longdescription lang="en">
+    Monero is a private, secure, untraceable, decentralised digital
+    currency. You are your bank, you control your funds, and nobody
+    can trace your transfers unless you allow them to do so.
+  </longdescription>
+  <use>
+    <flag name="hw-wallet">
+      Enable if you want to use a hardware wallet like a Trezor or
+      Ledger.
+    </flag>
+  </use>
+  <upstream>
+    <remote-id type="github">monero-project/monero</remote-id>
+  </upstream>
+</pkgmetadata>
