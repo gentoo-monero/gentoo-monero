@@ -15,17 +15,17 @@ KEYWORDS="~amd64"
 IUSE="hw-wallet readline"
 
 DEPEND="
-	dev-libs/boost
-	dev-libs/libsodium
-	dev-libs/openssl
-	net-dns/unbound[threads]
-	net-libs/czmq
+	dev-libs/boost:=
+	dev-libs/libsodium:=
+	dev-libs/openssl:=
+	net-dns/unbound:=[threads]
+	net-libs/czmq:=
 	hw-wallet? (
 		dev-libs/hidapi
-		dev-libs/protobuf
+		dev-libs/protobuf:=
 		virtual/libusb:1
 	)
-	readline? ( sys-libs/readline )"
+	readline? ( sys-libs/readline:0= )"
 RDEPEND="${DEPEND}"
 BDEPEND="virtual/pkgconfig"
 
