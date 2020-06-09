@@ -15,8 +15,8 @@ KEYWORDS="~amd64"
 IUSE="ssl http"
 
 DEPEND="
-	dev-libs/libuv
-	ssl? ( dev-libs/openssl )"
+	dev-libs/libuv:=
+	ssl? ( dev-libs/openssl:= )"
 
 PATCHES=("${FILESDIR}/${PN}-5.10.2-nonotls.patch")
 
