@@ -15,9 +15,9 @@ KEYWORDS="~amd64"
 IUSE="ssl"
 
 DEPEND="
-		dev-libs/libuv
-		sys-apps/hwloc
-		ssl? ( dev-libs/openssl )"
+		dev-libs/libuv:=
+		sys-apps/hwloc:=
+		ssl? ( dev-libs/openssl:= )"
 
 PATCHES=("${FILESDIR}/${PN}-5.11.2-nonotls.patch")
 
