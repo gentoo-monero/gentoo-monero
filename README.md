@@ -9,6 +9,9 @@
         
         # Enable the overlay.
         eselect repository enable monero
+        
+        # Sync
+        emaint sync -r monero
 
 2. Unmask everything in the overlay:
 
