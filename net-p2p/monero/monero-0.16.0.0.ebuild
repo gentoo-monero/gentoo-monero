@@ -15,7 +15,7 @@ KEYWORDS="~amd64"
 IUSE="hw-wallet readline"
 
 DEPEND="
-	dev-libs/boost:=
+	dev-libs/boost:=[nls,threads]
 	dev-libs/libsodium:=
 	dev-libs/openssl:=
 	net-dns/unbound:=[threads]
