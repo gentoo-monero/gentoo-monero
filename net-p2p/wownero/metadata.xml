@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>matt@offtopica.uk</email>
+    <name>Matt Smith</name>
+  </maintainer>
+  <longdescription lang="en">
+    Wownero is the future of privacy-centric meme currency.
+  </longdescription>
+  <use>
+    <flag name="hw-wallet">
+      Enable if you want to use a hardware wallet like a Trezor or
+      Ledger.
+    </flag>
+  </use>
+  <upstream>
+    <remote-id type="github">wownero/wownero</remote-id>
+  </upstream>
+</pkgmetadata>

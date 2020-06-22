@@ -1,0 +1,315 @@
+From 7aeb5035476c672e4c329c02b20ced1669ebe4cd Mon Sep 17 00:00:00 2001
+From: Lee Clagett <code@leeclagett.com>
+Date: Sun, 31 May 2020 21:18:11 -0400
+Subject: [PATCH] Fix boost <1.60 compilation and fix boost 1.73+ warnings
+
+---
+ contrib/epee/include/console_handler.h        |  4 ++--
+ .../epee/include/net/abstract_tcp_server2.inl | 19 +++++++++----------
+ .../epee/include/net/http_server_impl_base.h  |  2 +-
+ .../include/storages/levin_abstract_invoke2.h |  9 +++++----
+ src/blockchain_utilities/blocksdat_file.h     |  1 -
+ src/blockchain_utilities/bootstrap_file.h     |  1 -
+ src/checkpoints/checkpoints.cpp               |  9 ++++-----
+ src/device_trezor/trezor/transport.cpp        |  3 ++-
+ src/p2p/net_node.inl                          |  2 +-
+ src/rpc/rpc_args.cpp                          |  4 ++--
+ src/simplewallet/simplewallet.cpp             |  5 +++++
+ src/wallet/wallet2.cpp                        |  2 +-
+ tests/core_tests/chaingen.h                   |  5 +++--
+ 13 files changed, 35 insertions(+), 31 deletions(-)
+
+diff --git a/contrib/epee/include/console_handler.h b/contrib/epee/include/console_handler.h
+index a58850557a..08d9b8802f 100644
+--- a/contrib/epee/include/console_handler.h
++++ b/contrib/epee/include/console_handler.h
+@@ -465,7 +465,7 @@ namespace epee
+   bool run_default_console_handler_no_srv_param(t_server* ptsrv, t_handler handlr, std::function<std::string(void)> prompt, const std::string& usage = "")
+   {
+     async_console_handler console_handler;
+-    return console_handler.run(ptsrv, boost::bind<bool>(no_srv_param_adapter<t_server, t_handler>, boost::placeholders::_1, boost::placeholders::_2, handlr), prompt, usage);
++    return console_handler.run(ptsrv, std::bind<bool>(no_srv_param_adapter<t_server, t_handler>, std::placeholders::_1, std::placeholders::_2, handlr), prompt, usage);
+   }
+ 
+   template<class t_server, class t_handler>
+@@ -634,7 +634,7 @@ namespace epee
+ 
+     bool run_handling(std::function<std::string(void)> prompt, const std::string& usage_string, std::function<void(void)> exit_handler = NULL)
+     {
+-      return m_console_handler.run(boost::bind(&console_handlers_binder::process_command_str, this, boost::placeholders::_1), prompt, usage_string, exit_handler);
++      return m_console_handler.run(std::bind(&console_handlers_binder::process_command_str, this, std::placeholders::_1), prompt, usage_string, exit_handler);
+     }
+ 
+     void print_prompt()
+diff --git a/contrib/epee/include/net/abstract_tcp_server2.inl b/contrib/epee/include/net/abstract_tcp_server2.inl
+index 43ede3cc19..cbacd118ce 100644
+--- a/contrib/epee/include/net/abstract_tcp_server2.inl
++++ b/contrib/epee/include/net/abstract_tcp_server2.inl
+@@ -32,7 +32,6 @@
+ 
+ 
+ 
+-#include <boost/bind.hpp>
+ #include <boost/foreach.hpp>
+ #include <boost/uuid/random_generator.hpp>
+ #include <boost/chrono.hpp>
+@@ -210,15 +209,15 @@ PRAGMA_WARNING_DISABLE_VS(4355)
+       socket().async_receive(boost::asio::buffer(buffer_),
+         boost::asio::socket_base::message_peek,
+         strand_.wrap(
+-          boost::bind(&connection<t_protocol_handler>::handle_receive, self,
+-            boost::asio::placeholders::error,
+-            boost::asio::placeholders::bytes_transferred)));
++          std::bind(&connection<t_protocol_handler>::handle_receive, self,
++            std::placeholders::_1,
++            std::placeholders::_2)));
+     else
+       async_read_some(boost::asio::buffer(buffer_),
+         strand_.wrap(
+-          boost::bind(&connection<t_protocol_handler>::handle_read, self,
+-            boost::asio::placeholders::error,
+-            boost::asio::placeholders::bytes_transferred)));
++          std::bind(&connection<t_protocol_handler>::handle_read, self,
++            std::placeholders::_1,
++            std::placeholders::_2)));
+ #if !defined(_WIN32) || !defined(__i686)
+ 	// not supported before Windows7, too lazy for runtime check
+ 	// Just exclude for 32bit windows builds
+@@ -688,7 +687,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
+         reset_timer(get_default_timeout(), false);
+             async_write(boost::asio::buffer(m_send_que.front().data(), size_now ) ,
+                                  strand_.wrap(
+-                                 boost::bind(&connection<t_protocol_handler>::handle_write, self, _1, _2)
++                                 std::bind(&connection<t_protocol_handler>::handle_write, self, std::placeholders::_1, std::placeholders::_2)
+                                  )
+                                  );
+         //_dbg3("(chunk): " << size_now);
+@@ -892,7 +891,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
+ 		CHECK_AND_ASSERT_MES( size_now == m_send_que.front().size(), void(), "Unexpected queue size");
+ 		  async_write(boost::asio::buffer(m_send_que.front().data(), size_now) , 
+            strand_.wrap(
+-            boost::bind(&connection<t_protocol_handler>::handle_write, connection<t_protocol_handler>::shared_from_this(), _1, _2)
++            std::bind(&connection<t_protocol_handler>::handle_write, connection<t_protocol_handler>::shared_from_this(), std::placeholders::_1, std::placeholders::_2)
+ 			  )
+           );
+       //_dbg3("(normal)" << size_now);
+@@ -1402,7 +1401,7 @@ POP_WARNINGS
+       shared_context->connect_mut.lock(); shared_context->ec = ec_; shared_context->cond.notify_one(); shared_context->connect_mut.unlock();
+     };
+ 
+-    sock_.async_connect(remote_endpoint, boost::bind<void>(connect_callback, _1, local_shared_context));
++    sock_.async_connect(remote_endpoint, std::bind<void>(connect_callback, std::placeholders::_1, local_shared_context));
+     while(local_shared_context->ec == boost::asio::error::would_block)
+     {
+       bool r = local_shared_context->cond.timed_wait(lock, boost::get_system_time() + boost::posix_time::milliseconds(conn_timeout));
+diff --git a/contrib/epee/include/net/http_server_impl_base.h b/contrib/epee/include/net/http_server_impl_base.h
+index 6cd19f17b7..d88b53c942 100644
+--- a/contrib/epee/include/net/http_server_impl_base.h
++++ b/contrib/epee/include/net/http_server_impl_base.h
+@@ -31,7 +31,7 @@
+ 
+ 
+ #include <boost/thread.hpp>
+-#include <boost/bind.hpp> 
++#include <boost/bind/bind.hpp>
+ 
+ #include "net/abstract_tcp_server2.h"
+ #include "http_protocol_handler.h"
+diff --git a/contrib/epee/include/storages/levin_abstract_invoke2.h b/contrib/epee/include/storages/levin_abstract_invoke2.h
+index de8107781b..4633fa5462 100644
+--- a/contrib/epee/include/storages/levin_abstract_invoke2.h
++++ b/contrib/epee/include/storages/levin_abstract_invoke2.h
+@@ -28,6 +28,7 @@
+ 
+ #include "portable_storage_template_helper.h"
+ #include <boost/utility/value_init.hpp>
++#include <functional>
+ #include "span.h"
+ #include "net/levin_base.h"
+ 
+@@ -294,20 +295,20 @@ namespace epee
+ 
+ #define HANDLE_INVOKE2(command_id, func, type_name_in, typename_out) \
+   if(!is_notify && command_id == command) \
+-  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, type_name_in, typename_out>(this, command, in_buff, buff_out, boost::bind(func, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4), context);}
++  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, type_name_in, typename_out>(this, command, in_buff, buff_out, std::bind(func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4), context);}
+ 
+ #define HANDLE_INVOKE_T2(COMMAND, func) \
+   if(!is_notify && COMMAND::ID == command) \
+-  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, typename COMMAND::request, typename COMMAND::response>(command, in_buff, buff_out, boost::bind(func, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4), context);}
++  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, typename COMMAND::request, typename COMMAND::response>(command, in_buff, buff_out, std::bind(func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4), context);}
+ 
+ 
+ #define HANDLE_NOTIFY2(command_id, func, type_name_in) \
+   if(is_notify && command_id == command) \
+-  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, type_name_in>(this, command, in_buff, boost::bind(func, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3), context);}
++  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, type_name_in>(this, command, in_buff, std::bind(func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3), context);}
+ 
+ #define HANDLE_NOTIFY_T2(NOTIFY, func) \
+   if(is_notify && NOTIFY::ID == command) \
+-  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, typename NOTIFY::request>(this, command, in_buff, boost::bind(func, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3), context);}
++  {handled=true;return epee::net_utils::buff_to_t_adapter<internal_owner_type_name, typename NOTIFY::request>(this, command, in_buff, std::bind(func, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3), context);}
+ 
+ 
+ #define CHAIN_INVOKE_MAP2(func) \
+diff --git a/src/blockchain_utilities/blocksdat_file.h b/src/blockchain_utilities/blocksdat_file.h
+index 72b7afc17c..1accfbba2e 100644
+--- a/src/blockchain_utilities/blocksdat_file.h
++++ b/src/blockchain_utilities/blocksdat_file.h
+@@ -43,7 +43,6 @@
+ #include <algorithm>
+ #include <cstdio>
+ #include <fstream>
+-#include <boost/iostreams/copy.hpp>
+ #include <atomic>
+ 
+ #include "common/command_line.h"
+diff --git a/src/blockchain_utilities/bootstrap_file.h b/src/blockchain_utilities/bootstrap_file.h
+index 1e6ef5d819..db05561754 100644
+--- a/src/blockchain_utilities/bootstrap_file.h
++++ b/src/blockchain_utilities/bootstrap_file.h
+@@ -41,7 +41,6 @@
+ #include <algorithm>
+ #include <cstdio>
+ #include <fstream>
+-#include <boost/iostreams/copy.hpp>
+ #include <atomic>
+ 
+ #include "common/command_line.h"
+diff --git a/src/checkpoints/checkpoints.cpp b/src/checkpoints/checkpoints.cpp
+index 852e21318f..7214a30564 100644
+--- a/src/checkpoints/checkpoints.cpp
++++ b/src/checkpoints/checkpoints.cpp
+@@ -34,6 +34,7 @@
+ #include "string_tools.h"
+ #include "storages/portable_storage_template_helper.h" // epee json include
+ #include "serialization/keyvalue_serialization.h"
++#include <functional>
+ #include <vector>
+ 
+ using namespace epee;
+@@ -133,11 +134,9 @@ namespace cryptonote
+   //---------------------------------------------------------------------------
+   uint64_t checkpoints::get_max_height() const
+   {
+-    std::map< uint64_t, crypto::hash >::const_iterator highest = 
+-        std::max_element( m_points.begin(), m_points.end(),
+-                         ( boost::bind(&std::map< uint64_t, crypto::hash >::value_type::first, boost::placeholders::_1) <
+-                           boost::bind(&std::map< uint64_t, crypto::hash >::value_type::first, boost::placeholders::_2 ) ) );
+-    return highest->first;
++    if (m_points.empty())
++      return 0;
++    return m_points.rbegin()->first;
+   }
+   //---------------------------------------------------------------------------
+   const std::map<uint64_t, crypto::hash>& checkpoints::get_points() const
+diff --git a/src/device_trezor/trezor/transport.cpp b/src/device_trezor/trezor/transport.cpp
+index 51396d90a6..4947063736 100644
+--- a/src/device_trezor/trezor/transport.cpp
++++ b/src/device_trezor/trezor/transport.cpp
+@@ -32,6 +32,7 @@
+ #endif
+ 
+ #include <algorithm>
++#include <functional>
+ #include <boost/endian/conversion.hpp>
+ #include <boost/asio/io_service.hpp>
+ #include <boost/asio/ip/udp.hpp>
+@@ -711,7 +712,7 @@ namespace trezor{
+     // Start the asynchronous operation itself. The handle_receive function
+     // used as a callback will update the ec and length variables.
+     m_socket->async_receive_from(boost::asio::buffer(buffer), m_endpoint,
+-                                 boost::bind(&UdpTransport::handle_receive, boost::placeholders::_1, boost::placeholders::_2, &ec, &length));
++                                 std::bind(&UdpTransport::handle_receive, std::placeholders::_1, std::placeholders::_2, &ec, &length));
+ 
+     // Block until the asynchronous operation has completed.
+     do {
+diff --git a/src/p2p/net_node.inl b/src/p2p/net_node.inl
+index f8c177e3a9..5bd845e4f9 100644
+--- a/src/p2p/net_node.inl
++++ b/src/p2p/net_node.inl
+@@ -31,7 +31,7 @@
+ // IP blocking adapted from Boolberry
+ 
+ #include <algorithm>
+-#include <boost/bind.hpp>
++#include <boost/bind/bind.hpp>
+ #include <boost/date_time/posix_time/posix_time.hpp>
+ #include <boost/filesystem/operations.hpp>
+ #include <boost/optional/optional.hpp>
+diff --git a/src/rpc/rpc_args.cpp b/src/rpc/rpc_args.cpp
+index 9153e76ea0..8601bd0b4e 100644
+--- a/src/rpc/rpc_args.cpp
++++ b/src/rpc/rpc_args.cpp
+@@ -30,7 +30,7 @@
+ 
+ #include <boost/algorithm/string.hpp>
+ #include <boost/asio/ip/address.hpp>
+-#include <boost/bind.hpp>
++#include <functional>
+ #include "common/command_line.h"
+ #include "common/i18n.h"
+ #include "hex.h"
+@@ -221,7 +221,7 @@ namespace cryptonote
+ 
+       std::vector<std::string> access_control_origins;
+       boost::split(access_control_origins, access_control_origins_input, boost::is_any_of(","));
+-      std::for_each(access_control_origins.begin(), access_control_origins.end(), boost::bind(&boost::trim<std::string>, _1, std::locale::classic()));
++      std::for_each(access_control_origins.begin(), access_control_origins.end(), std::bind(&boost::trim<std::string>, std::placeholders::_1, std::locale::classic()));
+       config.access_control_origins = std::move(access_control_origins);
+     }
+ 
+diff --git a/src/simplewallet/simplewallet.cpp b/src/simplewallet/simplewallet.cpp
+index b1e69161f5..96fbf9967b 100644
+--- a/src/simplewallet/simplewallet.cpp
++++ b/src/simplewallet/simplewallet.cpp
+@@ -33,6 +33,11 @@
+  * 
+  * \brief Source file that defines simple_wallet class.
+  */
++
++// use boost bind placeholders for now
++#define BOOST_BIND_GLOBAL_PLACEHOLDERS 1
++#include <boost/bind.hpp>
++
+ #include <locale.h>
+ #include <thread>
+ #include <iostream>
+diff --git a/src/wallet/wallet2.cpp b/src/wallet/wallet2.cpp
+index 93e522a932..3c0b4a75a8 100644
+--- a/src/wallet/wallet2.cpp
++++ b/src/wallet/wallet2.cpp
+@@ -947,7 +947,7 @@ uint32_t get_subaddress_clamped_sum(uint32_t idx, uint32_t extra)
+ 
+ static void setup_shim(hw::wallet_shim * shim, tools::wallet2 * wallet)
+ {
+-  shim->get_tx_pub_key_from_received_outs = boost::bind(&tools::wallet2::get_tx_pub_key_from_received_outs, wallet, _1);
++  shim->get_tx_pub_key_from_received_outs = std::bind(&tools::wallet2::get_tx_pub_key_from_received_outs, wallet, std::placeholders::_1);
+ }
+ 
+ bool get_pruned_tx(const cryptonote::COMMAND_RPC_GET_TRANSACTIONS::entry &entry, cryptonote::transaction &tx, crypto::hash &tx_hash)
+diff --git a/tests/core_tests/chaingen.h b/tests/core_tests/chaingen.h
+index 441f483ed5..e94bf6be1d 100644
+--- a/tests/core_tests/chaingen.h
++++ b/tests/core_tests/chaingen.h
+@@ -30,6 +30,7 @@
+ 
+ #pragma once
+ 
++#include <functional>
+ #include <vector>
+ #include <iostream>
+ #include <stdint.h>
+@@ -856,10 +857,10 @@ inline bool do_replay_file(const std::string& filename)
+ }
+ 
+ #define REGISTER_CALLBACK(CB_NAME, CLBACK) \
+-  register_callback(CB_NAME, boost::bind(&CLBACK, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3));
++  register_callback(CB_NAME, std::bind(&CLBACK, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+ 
+ #define REGISTER_CALLBACK_METHOD(CLASS, METHOD) \
+-  register_callback(#METHOD, boost::bind(&CLASS::METHOD, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3));
++  register_callback(#METHOD, std::bind(&CLASS::METHOD, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+ 
+ #define MAKE_GENESIS_BLOCK(VEC_EVENTS, BLK_NAME, MINER_ACC, TS)                       \
+   test_generator generator;                                                           \
