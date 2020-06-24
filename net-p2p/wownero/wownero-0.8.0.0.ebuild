@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="Privacy-centric meme currency"
 HOMEPAGE="https://www.wownero.com https://github.com/wownero/wownero"
@@ -41,7 +41,7 @@ src_configure() {
 		-DMANUAL_SUBMODULES=ON
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {

@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="Monero (XMR) Stratum protocol proxy"
 HOMEPAGE="https://xmrig.com/proxy https://github.com/xmrig/xmrig-proxy"
@@ -26,7 +26,7 @@ src_configure() {
 		-DWITH_HTTP=$(usex http)
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
