@@ -1,0 +1,42 @@
+From 048f02b4c99f07355acece3794005c9074a1e3ec Mon Sep 17 00:00:00 2001
+From: moneromooo-monero <moneromooo-monero@users.noreply.github.com>
+Date: Sun, 16 Aug 2020 16:14:04 +0000
+Subject: [PATCH] Fix build with Boost 1.74
+
+Thanks iDunk for testing
+---
+ src/cryptonote_core/blockchain.h | 3 +++
+ src/wallet/wallet2.h             | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/src/cryptonote_core/blockchain.h b/src/cryptonote_core/blockchain.h
+index 82051ecd4..1b0d33ee3 100644
+--- a/src/cryptonote_core/blockchain.h
++++ b/src/cryptonote_core/blockchain.h
+@@ -30,6 +30,9 @@
+ 
+ #pragma once
+ #include <boost/asio/io_service.hpp>
++#if BOOST_VERSION >= 107400
++#include <boost/serialization/library_version_type.hpp>
++#endif
+ #include <boost/serialization/serialization.hpp>
+ #include <boost/serialization/version.hpp>
+ #include <boost/serialization/list.hpp>
+diff --git a/src/wallet/wallet2.h b/src/wallet/wallet2.h
+index 3a14215b3..a718741ab 100644
+--- a/src/wallet/wallet2.h
++++ b/src/wallet/wallet2.h
+@@ -34,6 +34,9 @@
+ 
+ #include <boost/program_options/options_description.hpp>
+ #include <boost/program_options/variables_map.hpp>
++#if BOOST_VERSION >= 107400
++#include <boost/serialization/library_version_type.hpp>
++#endif
+ #include <boost/serialization/list.hpp>
+ #include <boost/serialization/vector.hpp>
+ #include <boost/serialization/deque.hpp>
+-- 
+2.28.0
+
