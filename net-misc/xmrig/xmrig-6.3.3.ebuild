@@ -12,12 +12,15 @@ SRC_URI="https://github.com/xmrig/xmrig/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="donate ssl"
+IUSE="donate libressl ssl"
 
 DEPEND="
 	dev-libs/libuv:=
 	sys-apps/hwloc:=
-	ssl? ( dev-libs/openssl:= )"
+	ssl? (
+		!libressl? ( dev-libs/openssl:= )
+		libressl? ( dev-libs/libressl:= )
+	)"
 
 PATCHES=("${FILESDIR}/${PN}-5.11.2-nonotls.patch")
 
