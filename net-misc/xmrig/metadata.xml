@@ -9,6 +9,11 @@
     XMRig High performance, open source, cross platform RandomX,
     CryptoNight, KawPow, AstroBWT, and Argon2 CPU/GPU miner.
   </longdescription>
+  <use>
+    <flag name="donate">
+      Set the default donation level to 1% instead of 0
+    </flag>
+  </use>
   <upstream>
     <remote-id type="github">xmrig/xmrig</remote-id>
   </upstream>

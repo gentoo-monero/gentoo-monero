@@ -12,7 +12,7 @@ SRC_URI="https://github.com/xmrig/xmrig/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="ssl"
+IUSE="donate ssl"
 
 DEPEND="
 	dev-libs/libuv:=
@@ -20,6 +20,12 @@ DEPEND="
 	ssl? ( dev-libs/openssl:= )"
 
 PATCHES=("${FILESDIR}/${PN}-5.11.2-nonotls.patch")
+
+src_prepare() {
+	use donate || eapply "${FILESDIR}/${PN}-6.3.3-nodonate.patch"
+
+	cmake_src_prepare
+}
 
 src_configure() {
 	local mycmakeargs=(
