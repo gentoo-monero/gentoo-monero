@@ -5,21 +5,29 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="RandomX, CryptoNight, AstroBWT and Argon2 CPU/GPU miner"
+DESCRIPTION="RandomX, CryptoNight, KawPow, AstroBWT, and Argon2 CPU/GPU miner"
 HOMEPAGE="https://xmrig.com https://github.com/xmrig/xmrig"
 SRC_URI="https://github.com/xmrig/xmrig/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="ssl"
+IUSE="donate libressl +ssl"
+REQUIRED_USE="libressl? ( ssl )"
 
 DEPEND="
 	dev-libs/libuv:=
 	sys-apps/hwloc:=
-	ssl? ( dev-libs/openssl:= )"
+	ssl? (
+		!libressl? ( dev-libs/openssl:= )
+		libressl? ( dev-libs/libressl:= ) )"
 
 PATCHES=("${FILESDIR}/${PN}-5.11.2-nonotls.patch")
+
+src_prepare() {
+	! use donate && PATCHES+=("${FILESDIR}/${PN}-no-default-donate.patch")
+	cmake_src_prepare
+}
 
 src_configure() {
 	local mycmakeargs=(
