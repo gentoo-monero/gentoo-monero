@@ -7,7 +7,7 @@
   </maintainer>
   <longdescription lang="en">
     XMRig High performance, open source, cross platform RandomX,
-    CryptoNight, AstroBWT and Argon2 CPU/GPU miner.
+    CryptoNight, KawPow, AstroBWT, and Argon2 CPU/GPU miner.
   </longdescription>
   <upstream>
     <remote-id type="github">xmrig/xmrig</remote-id>
