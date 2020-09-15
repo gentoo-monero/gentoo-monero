@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>telans@posteo.de</email>
+    <name>Theo Anderson</name>
+  </maintainer>
+  <longdescription lang="en">
+    XMRig High performance, open source, cross platform RandomX,
+    CryptoNight, AstroBWT and Argon2 CPU/GPU miner. Algorithm switching,
+    when used with the MoneroOcean mining pool.
+  </longdescription>
+  <use>
+    <flag name="donate">Enable a default donation value of 1% CPU time instead of 0.</flag>
+  </use>
+  <upstream>
+    <remote-id type="github">MoneroOcean/xmrig</remote-id>
+  </upstream>
+</pkgmetadata>
