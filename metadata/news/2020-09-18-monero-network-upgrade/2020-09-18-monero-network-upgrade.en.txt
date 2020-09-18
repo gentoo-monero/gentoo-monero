@@ -1,0 +1,15 @@
+Title: Monero Network Upgrade
+Author: Matt Smith <matt@offtopica.uk>
+Content-Type: text/plain
+Posted: 2020-09-18
+Revision: 1
+News-Item-Format: 2.0
+Display-If-Installed: net-p2p/monero
+
+The Monero network will be going through a scheduled update at height
+2210000 which will approximately be on the 17th of October 2020. If you
+are not on daemon version v0.17.0.0 after the upgrade, you will be left
+on the old chain until you upgrade.
+
+This network upgrade does not bring any PoW changes with it, so mining
+software like net-misc/xmrig need not be upgraded.
