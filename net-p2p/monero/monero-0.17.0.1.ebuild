@@ -14,7 +14,7 @@ EGIT_COMMIT="v${PV}"
 LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="hw-wallet readline"
+IUSE="hw-wallet libressl readline"
 
 DEPEND="
 	acct-group/monero
@@ -29,6 +29,8 @@ DEPEND="
 		dev-libs/protobuf:=
 		virtual/libusb:1
 	)
+	!libressl? ( dev-libs/openssl:= )
+	libressl? ( dev-libs/libressl:= )
 	readline? ( sys-libs/readline:0= )"
 RDEPEND="${DEPEND}"
 BDEPEND="virtual/pkgconfig"
