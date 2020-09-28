@@ -21,7 +21,6 @@ DEPEND="
 	acct-user/monero
 	dev-libs/boost:=[nls,threads]
 	dev-libs/libsodium:=
-	dev-libs/openssl:=
 	net-dns/unbound:=[threads]
 	net-libs/czmq:=
 	hw-wallet? (
