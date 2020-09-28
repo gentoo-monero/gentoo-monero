@@ -11,7 +11,7 @@ SRC_URI=""
 EGIT_REPO_URI="https://git.wownero.com/wownero/wownero.git"
 EGIT_COMMIT="v${PV}"
 
-LICENSE="GPL-3+"
+LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="readline"

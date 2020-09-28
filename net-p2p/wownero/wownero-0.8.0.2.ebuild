@@ -9,7 +9,7 @@ DESCRIPTION="Privacy-centric meme currency"
 HOMEPAGE="https://www.wownero.com https://github.com/wownero/wownero"
 SRC_URI="https://distfiles.offtopica.uk/${P}.tar.xz"
 
-LICENSE="GPL-3+"
+LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="readline"
