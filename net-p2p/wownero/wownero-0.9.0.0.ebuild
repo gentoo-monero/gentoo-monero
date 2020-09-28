@@ -14,14 +14,15 @@ EGIT_COMMIT="v${PV}"
 LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="readline"
+IUSE="libressl readline"
 
 DEPEND="
 	dev-libs/boost:=[nls,threads]
 	dev-libs/libsodium:=
-	dev-libs/openssl:=
 	net-dns/unbound:=[threads]
 	net-libs/czmq:=
+	!libressl? ( dev-libs/openssl:= )
+	libressl? ( dev-libs/libressl:= )
 	readline? ( sys-libs/readline:0= )"
 RDEPEND="${DEPEND}"
 BDEPEND="virtual/pkgconfig"
