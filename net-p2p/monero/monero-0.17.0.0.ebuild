@@ -72,13 +72,13 @@ src_install() {
 
 pkg_postinst() {
 	einfo "Start the Monero P2P daemon as a system service with"
-	einfo "`rc-service monerod start`. Enable it at startup with"
-	einfo "`rc-update add monerod default`."
+	einfo "'rc-service monerod start'. Enable it at startup with"
+	einfo "'rc-update add monerod default'."
 	einfo
-	einfo "Run `monerod status` as any user to get sync status and other stats."
+	einfo "Run 'monerod status' as any user to get sync status and other stats."
 	einfo
 	einfo "The Monero blockchain can take up a lot of space (80 GiB) and is stored"
 	einfo "in /var/lib/monero by default. You may want to enable pruning by adding"
-	einfo "`prune-blockchain=1` to /etc/monero/monerod.conf to prune the blockchain"
+	einfo "'prune-blockchain=1' to /etc/monero/monerod.conf to prune the blockchain"
 	einfo "or move the data directory to another disk."
 }
