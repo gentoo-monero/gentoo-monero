@@ -2,7 +2,10 @@
 name: Codeowners
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+    paths:
+      - '*/*/metadata.xml'
 jobs:
   codeowners:
     name: Codeowners
