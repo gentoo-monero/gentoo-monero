@@ -2,9 +2,9 @@ Title: Monero Network Upgrade
 Author: Matt Smith <matt@offtopica.uk>
 Content-Type: text/plain
 Posted: 2020-09-18
-Revision: 1
+Revision: 2
 News-Item-Format: 2.0
-Display-If-Installed: net-p2p/monero
+Display-If-Installed: <net-p2p/monero-0.17.0.0
 
 The Monero network will be going through a scheduled update at height
 2210000 which will approximately be on the 17th of October 2020. If you
