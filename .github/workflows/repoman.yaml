@@ -1,6 +1,12 @@
 ---
 name: Repoman
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '*/*/*.ebuild'
+  pull_request:
+    paths:
+      - '*/*/*.ebuild'
 jobs:
   repoman:
     name: Repoman
