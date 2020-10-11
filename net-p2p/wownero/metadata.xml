@@ -8,12 +8,6 @@
   <longdescription lang="en">
     Wownero is the future of privacy-centric meme currency.
   </longdescription>
-  <use>
-    <flag name="hw-wallet">
-      Enable if you want to use a hardware wallet like a Trezor or
-      Ledger.
-    </flag>
-  </use>
   <upstream>
     <remote-id type="github">wownero/wownero</remote-id>
   </upstream>
