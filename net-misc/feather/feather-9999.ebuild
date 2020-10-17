@@ -35,7 +35,10 @@ DEPEND="
 	!libressl? ( dev-libs/openssl:= )
 	libressl? ( dev-libs/libressl:= )
 "
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	net-vpn/tor
+"
 BDEPEND="virtual/pkgconfig"
 
 src_configure() {
@@ -63,4 +66,9 @@ src_compile() {
 
 src_install() {
 	dobin "${BUILD_DIR}/bin/feather"
+}
+
+pkg_postinst() {
+	einfo "Ensure that Tor is running with 'rc-service tor start' before"
+	einfo "using Feather."
 }
