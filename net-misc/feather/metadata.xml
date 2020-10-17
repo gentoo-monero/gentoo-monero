@@ -11,6 +11,9 @@
     created and maintained by dsc and tobtoht.
   </longdescription>
   <use>
+    <flag name="xmrig">
+      Enable mining support using a user specified xmrig binary.
+    </flag>
     <flag name="xmrto">
       Enable swaps to Bitcoin using xmr.to.
     </flag>
