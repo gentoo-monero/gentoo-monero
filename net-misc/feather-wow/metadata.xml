@@ -10,4 +10,9 @@
     Mac OS and Windows written in C++ with the Qt framework. It is
     created and maintained by dsc and tobtoht.
   </longdescription>
+  <use>
+    <flag name="xmrig">
+      Enable mining support using a user specified xmrig binary.
+    </flag>
+  </use>
 </pkgmetadata>
