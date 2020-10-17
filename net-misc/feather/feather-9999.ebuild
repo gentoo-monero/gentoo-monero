@@ -15,7 +15,7 @@ EGIT_REPO_URI="https://git.wownero.com/feather/feather.git"
 LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS=""
-IUSE="libressl +xmrto"
+IUSE="libressl xmrig +xmrto"
 
 DEPEND="
 	dev-libs/boost:=[nls,threads]
@@ -41,17 +41,18 @@ BDEPEND="virtual/pkgconfig"
 src_configure() {
 	local mycmakeargs=(
 		-DARCH=x86_64
-		-DBUILD_64=On
+		-DBUILD_64=ON
 		-DBUILD_SHARED_LIBS=Off # Vendored Monero libs collision
 		-DBUILD_TAG="linux-x64"
-		-DBUILD_TESTS=Off
-		-DBUILD_TOR=Off
-		-DDONATE_BEG=Off
-		-DINSTALL_VENDORED_LIBUNBOUND=Off
+		-DBUILD_TESTS=OFF
+		-DBUILD_TOR=OFF
+		-DDONATE_BEG=OFF
+		-DINSTALL_VENDORED_LIBUNBOUND=OFF
 		-DMANUAL_SUBMODULES=1
-		-DSTATIC=Off
+		-DSTATIC=OFF
 		-DUSE_DEVICE_TREZOR=OFF
 		-DXMRTO=$(usex xmrto)
+		-DXMRig=$(usex xmrig)
 	)
 
 	cmake_src_configure
