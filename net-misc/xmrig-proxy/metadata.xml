@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="person">
-    <email>matt@offtopica.uk</email>
-    <name>Matt Smith</name>
-  </maintainer>
+  <!-- maintainer-needed -->
   <longdescription lang="en">
     Extremely high performance Monero (XMR) Stratum protocol proxy,
     can easily handle over 100K connections on cheap $5 (1024 MB)

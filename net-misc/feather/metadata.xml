@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="person">
-    <email>matt@offtopica.uk</email>
-    <name>Matt Smith</name>
-  </maintainer>
+  <!-- maintainer-needed -->
   <longdescription lang="en">
     Feather is a free, open-source Monero client Linux with ports for
     Mac OS and Windows written in C++ with the Qt framework. It is
