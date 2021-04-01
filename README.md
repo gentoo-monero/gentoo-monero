@@ -1,10 +1,5 @@
 # Gentoo Monero Overlay
 
-## Notice (2020-12-19)
-
-Due to personal reasons I am no longer maintaining any packages in this repository.
-Feel free to make pull requests to take ownership of any package (I will still review and merge), or create an issue if you'd like to be made a member of the gentoo-monero organisation.
-
 ## Getting Started
 
 ### `eselect-repository`
