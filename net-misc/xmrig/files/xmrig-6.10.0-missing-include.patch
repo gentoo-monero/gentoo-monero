@@ -1,0 +1,30 @@
+From 28f268aeba47577e73e6169c06ae18de251614c1 Mon Sep 17 00:00:00 2001
+From: Matthew Smith <matt@offtopica.uk>
+Date: Thu, 1 Apr 2021 11:01:55 +0100
+Subject: [PATCH 15/15] Add missing include
+
+memory header ends up not being included when built without OpenCL
+support.
+
+Closes: https://github.com/xmrig/xmrig/issues/2224
+---
+ src/backend/common/Workers.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/backend/common/Workers.h b/src/backend/common/Workers.h
+index 0ef3b889..66491243 100644
+--- a/src/backend/common/Workers.h
++++ b/src/backend/common/Workers.h
+@@ -20,6 +20,9 @@
+ #define XMRIG_WORKERS_H
+ 
+ 
++#include <memory>
++
++
+ #include "backend/common/Thread.h"
+ #include "backend/cpu/CpuLaunchData.h"
+ 
+-- 
+2.31.1
+
