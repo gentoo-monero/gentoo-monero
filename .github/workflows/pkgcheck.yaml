@@ -1,5 +1,5 @@
 ---
-name: Repoman
+name: pkgcheck
 on:
   push:
     paths:
@@ -8,9 +8,11 @@ on:
     paths:
       - '*/*/*.ebuild'
 jobs:
-  repoman:
-    name: Repoman
+  pkgcheck:
+    name: pkgcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: gentoo-monero/repoman-action@v1
+      - uses: pkgcore/pkgcheck-action@v1
+        with:
+          args: --keywords=-RedundantVersion
