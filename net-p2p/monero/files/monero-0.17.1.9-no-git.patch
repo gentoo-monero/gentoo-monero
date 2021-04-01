@@ -1,0 +1,40 @@
+From e8b243c7a1256915755496e957b0c010a2cd689f Mon Sep 17 00:00:00 2001
+From: Matthew Smith <matt@offtopica.uk>
+Date: Thu, 1 Apr 2021 10:13:58 +0100
+Subject: [PATCH] Always assume building from tagged release
+
+---
+ cmake/Version.cmake | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
+
+diff --git a/cmake/Version.cmake b/cmake/Version.cmake
+index 707d72639..e6386339d 100644
+--- a/cmake/Version.cmake
++++ b/cmake/Version.cmake
+@@ -31,20 +31,8 @@ function (write_version tag)
+   configure_file("${CMAKE_CURRENT_LIST_DIR}/../src/version.cpp.in" "${CMAKE_BINARY_DIR}/version.cpp")
+ endfunction ()
+ 
+-find_package(Git QUIET)
+-if ("$Format:$" STREQUAL "")
+-  # We're in a tarball; use hard-coded variables.
+-  set(VERSION_IS_RELEASE "true")
+-  write_version("release")
+-elseif (GIT_FOUND OR Git_FOUND)
+-  message(STATUS "Found Git: ${GIT_EXECUTABLE}")
+-  include(GitVersion)
+-  get_version_tag_from_git("${GIT_EXECUTABLE}")
+-  write_version("${VERSIONTAG}")
+-else()
+-  message(STATUS "WARNING: Git was not found!")
+-  set(VERSION_IS_RELEASE "false")
+-  write_version("unknown")
+-endif ()
++set(VERSION_IS_RELEASE "true")
++write_version("release")
++
+ add_custom_target(genversion ALL
+   DEPENDS "${CMAKE_BINARY_DIR}/version.cpp")
+-- 
+2.31.1
+
