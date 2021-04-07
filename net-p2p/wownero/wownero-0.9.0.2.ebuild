@@ -13,7 +13,7 @@ EGIT_COMMIT="v${PV}"
 
 LICENSE="BSD MIT"
 SLOT="0"
-KEYWORDS="-amd64"
+KEYWORDS=""
 IUSE="libressl readline"
 
 DEPEND="
