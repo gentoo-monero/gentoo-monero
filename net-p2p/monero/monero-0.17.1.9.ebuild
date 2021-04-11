@@ -94,19 +94,6 @@ src_install() {
 	if use daemon; then
 		dodoc utils/conf/monerod.conf
 
-		# TODO: Ensure the existence and owner of these directories in the
-		# service filem not here.
-
-		# data-dir
-		keepdir /var/lib/monero
-		fowners monero:monero /var/lib/monero
-		fperms 0755 /var/lib/monero
-
-		# log-file dir
-		keepdir /var/log/monero
-		fowners monero:monero /var/log/monero
-		fperms 0755 /var/log/monero
-
 		# /etc/monero/monerod.conf
 		insinto /etc/monero
 		newins "${FILESDIR}/monerod-0.16.0.3-r1.monerod.conf" monerod.conf
