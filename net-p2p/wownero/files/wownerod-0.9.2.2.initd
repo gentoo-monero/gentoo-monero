@@ -1,0 +1,21 @@
+#!/sbin/openrc-run
+# Copyright 2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+pidfile=/var/run/wownerod.pid
+command=/usr/bin/wownerod
+command_args="${wownerod_args}"
+start_stop_daemon_args="-u ${wownerod_user} -b -m -p ${pidfile}"
+
+name="Wownero P2P Daemon"
+description="Connects to the Wownero P2P network"
+
+depend() {
+    need localmount
+    need net
+}
+
+start_pre() {
+    checkpath --directory --owner ${wownerod_user}:${wownerod_group} --mode 0755 \
+	      /var/lib/wownero /var/log/wownero
+}

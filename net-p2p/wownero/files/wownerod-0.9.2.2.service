@@ -1,0 +1,17 @@
+[Unit]
+Description=Monero P2P Daemon
+After=network.target
+
+[Service]
+User=wownero
+Group=wownero
+StateDirectory=wownero
+LogsDirectory=wownero
+Type=simple
+ExecStart=/usr/bin/wownerod --config-file /etc/wownero/wownerod.conf --non-interactive
+Restart=on-failure
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target

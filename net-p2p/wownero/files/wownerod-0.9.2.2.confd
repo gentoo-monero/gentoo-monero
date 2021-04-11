@@ -1,0 +1,6 @@
+# Copyright 2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+wownerod_args="--config-file /etc/wownero/wownerod.conf --non-interactive"
+wownerod_user=wownero
+wownerod_group=wownero
