@@ -1,0 +1,14 @@
+#!/sbin/openrc-run
+# Copyright 1999-2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+pidfile="/var/run/xmrig-proxy.pid"
+command="/usr/bin/xmrig-proxy"
+command_args="${XMRIG_PROXY_START_OPTS}"
+start_stop_daemon_args="-u xmrig-proxy -b -m -p ${pidfile}"
+
+depend() {
+    need net
+    checkpath --directory --owner xmrig-proxy:xmrig-proxy --mode 0755 \
+              /var/log/xmrig-proxy
+}

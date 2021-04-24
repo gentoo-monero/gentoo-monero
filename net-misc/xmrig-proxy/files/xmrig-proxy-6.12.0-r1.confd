@@ -1,0 +1,1 @@
+XMRIG_PROXY_START_OPTS="--config=/etc/xmrig-proxy.json --log-file=/var/log/xmrig-proxy/xmrig-proxy.log"
