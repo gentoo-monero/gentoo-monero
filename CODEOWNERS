@@ -3,8 +3,10 @@
 *                        matt@offtopica.uk
 /acct-group/monero/      
 /acct-group/wownero/     
+/acct-group/xmrig-proxy/ 
 /acct-user/monero/       
 /acct-user/wownero/      
+/acct-user/xmrig-proxy/  
 /dev-libs/monero-seed/   
 /net-misc/feather/       
 /net-misc/xmrig-mo/      telans@posteo.de
