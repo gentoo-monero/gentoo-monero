@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -13,16 +13,13 @@ SRC_URI="https://github.com/MoneroOcean/xmrig/archive/v${PV}-${MO_PV}.tar.gz -> 
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="donate libressl +ssl"
-REQUIRED_USE="libressl? ( ssl )"
+IUSE="donate +ssl"
 
 DEPEND="
 	dev-libs/libuv:=
 	sys-apps/hwloc:=
-	ssl? (
-		!libressl? ( dev-libs/openssl:= )
-		libressl? ( dev-libs/libressl:= )
-	)"
+	ssl? ( dev-libs/openssl:= )
+"
 
 S="${WORKDIR}/xmrig-${PV}-${MO_PV}"
 
