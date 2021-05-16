@@ -29,8 +29,6 @@ REQUIRED_USE="|| ( daemon tools wallet-cli wallet-rpc )"
 RESTRICT="test"
 
 DEPEND="
-	acct-group/monero
-	acct-user/monero
 	dev-libs/boost:0/1.75.0[nls,threads]
 	dev-libs/libsodium:=
 	dev-libs/openssl:=
@@ -43,7 +41,10 @@ DEPEND="
 		virtual/libusb:1
 	)
 	readline? ( sys-libs/readline:0= )"
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	acct-group/monero
+	acct-user/monero"
 BDEPEND="virtual/pkgconfig"
 
 PATCHES=(
