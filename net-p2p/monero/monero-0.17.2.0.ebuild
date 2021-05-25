@@ -29,7 +29,7 @@ REQUIRED_USE="|| ( daemon tools wallet-cli wallet-rpc )"
 RESTRICT="test"
 
 DEPEND="
-	dev-libs/boost:0/1.75.0[nls,threads]
+	dev-libs/boost:=[nls,threads]
 	dev-libs/libsodium:=
 	dev-libs/openssl:=
 	dev-libs/rapidjson
@@ -50,6 +50,7 @@ BDEPEND="virtual/pkgconfig"
 PATCHES=(
 	"${FILESDIR}/${PN}-0.17.1.3-linkjobs.patch"
 	"${FILESDIR}/${PN}-0.17.1.9-no-git.patch"
+	"${FILESDIR}/${PN}-0.17.2.0-boost-176.patch"
 )
 
 src_unpack() {
