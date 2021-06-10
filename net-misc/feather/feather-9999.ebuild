@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,13 +15,14 @@ EGIT_REPO_URI="https://git.wownero.com/feather/feather.git"
 LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS=""
-IUSE="libressl xmrig +xmrto"
+IUSE="xmrig +xmrto"
 
 DEPEND="
 	dev-libs/boost:=[nls,threads]
 	dev-libs/libgcrypt:=
 	dev-libs/libsodium:=
 	dev-libs/monero-seed
+	dev-libs/openssl:=
 	>=dev-qt/qtcore-5.15
 	>=dev-qt/qtgui-5.15
 	>=dev-qt/qtnetwork-5.15
@@ -32,8 +33,6 @@ DEPEND="
 	media-gfx/qrencode:=
 	net-dns/unbound:=[threads]
 	net-libs/czmq:=
-	!libressl? ( dev-libs/openssl:= )
-	libressl? ( dev-libs/libressl:= )
 "
 RDEPEND="
 	${DEPEND}
