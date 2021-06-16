@@ -8,7 +8,7 @@ inherit cmake git-r3
 DESCRIPTION="A free, open-source Monero wallet"
 HOMEPAGE="https://featherwallet.org"
 SRC_URI=""
-EGIT_REPO_URI="https://git.wownero.com/feather/feather.git"
+EGIT_REPO_URI="https://git.featherwallet.org/feather/feather.git"
 
 # Feather is released under the terms of the BSD license, but it vendors
 # code from Monero and Tor too.
