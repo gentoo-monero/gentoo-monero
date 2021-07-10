@@ -1,0 +1,25 @@
+From 57df1097426b89bec085953d853d78aa15aec603 Mon Sep 17 00:00:00 2001
+From: Matt Smith <matt@offtopica.uk>
+Date: Sat, 10 Jul 2021 11:22:35 +0100
+Subject: [PATCH] Add missing include
+Upstream: https://github.com/xmrig/xmrig-proxy/pull/464
+
+---
+ src/proxy/splitters/donate/DonateSplitter.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/proxy/splitters/donate/DonateSplitter.h b/src/proxy/splitters/donate/DonateSplitter.h
+index e89e7e71..4c8cdb1e 100644
+--- a/src/proxy/splitters/donate/DonateSplitter.h
++++ b/src/proxy/splitters/donate/DonateSplitter.h
+@@ -26,6 +26,7 @@
+ #define XMRIG_DONATESPLITTER_H
+ 
+ 
++#include <cstddef>
+ #include <cstdint>
+ #include <map>
+ 
+-- 
+2.32.0
+
