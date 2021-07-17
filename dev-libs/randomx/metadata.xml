@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>matt@offtopica.uk</email>
+    <name>Matt Smith</name>
+  </maintainer>
+  <longdescription lang="en">
+    RandomX is a proof-of-work (PoW) algorithm that is optimized for
+    general-purpose CPUs. RandomX uses random code execution (hence
+    the name) together with several memory-hard techniques to minimize
+    the efficiency advantage of specialized hardware.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">tevador/randomx</remote-id>
+  </upstream>
+</pkgmetadata>

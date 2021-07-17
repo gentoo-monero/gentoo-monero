@@ -1,0 +1,37 @@
+From d29835d265a86a1b504f12c142835ef4c0c95915 Mon Sep 17 00:00:00 2001
+From: Matt Smith <matt@offtopica.uk>
+Date: Sat, 17 Jul 2021 10:44:23 +0100
+Subject: [PATCH] Add GNU_STACK markings for executable stack
+
+---
+ src/jit_compiler_a64_static.S | 4 ++++
+ src/jit_compiler_x86_static.S | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/src/jit_compiler_a64_static.S b/src/jit_compiler_a64_static.S
+index 7fe6599..65b527a 100644
+--- a/src/jit_compiler_a64_static.S
++++ b/src/jit_compiler_a64_static.S
+@@ -586,3 +586,7 @@ DECL(randomx_calc_dataset_item_aarch64_store_result):
+ 	ret
+ 
+ DECL(randomx_calc_dataset_item_aarch64_end):
++
++#if defined(__linux__) && defined(__ELF__)
++.section .note.GNU-stack, "", %progbits
++#endif
+diff --git a/src/jit_compiler_x86_static.S b/src/jit_compiler_x86_static.S
+index 6757c58..84726ef 100644
+--- a/src/jit_compiler_x86_static.S
++++ b/src/jit_compiler_x86_static.S
+@@ -225,3 +225,7 @@ DECL(randomx_reciprocal_fast):
+ 	mov rcx, rdi
+ #endif
+ 	#include "asm/randomx_reciprocal.inc"
++
++#if defined(__linux__) && defined(__ELF__)
++.section .note.GNU-stack, "", %progbits
++#endif
+-- 
+2.32.0
+
