@@ -28,9 +28,6 @@ src_configure() {
 
 src_install() {
 	dolib.so "${BUILD_DIR}"/librandomx.so
+	doheader "${S}/src/randomx.h"
 	dobin "${BUILD_DIR}"/randomx-{benchmark,codegen}
-}
-
-src_test() {
-	"${BUILD_DIR}"/randomx-tests || die "tests failed"
 }
