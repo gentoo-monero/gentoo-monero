@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake systemd
 
@@ -29,7 +29,7 @@ REQUIRED_USE="|| ( daemon tools wallet-cli wallet-rpc )"
 RESTRICT="test"
 
 DEPEND="
-	dev-libs/boost:=[nls,threads]
+	dev-libs/boost:=[nls,threads(+)]
 	dev-libs/libsodium:=
 	dev-libs/openssl:=
 	dev-libs/rapidjson
