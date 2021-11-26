@@ -42,7 +42,7 @@ BDEPEND="virtual/pkgconfig"
 
 src_configure() {
 	local mycmakeargs=(
-		-DARCH=x86_64
+		-DARCH=x86-64
 		-DBUILD_64=ON
 		-DBUILD_SHARED_LIBS=Off # Vendored Monero libs collision
 		-DBUILD_TAG="linux-x64"
