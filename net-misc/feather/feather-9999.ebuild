@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,12 +15,13 @@ EGIT_REPO_URI="https://git.featherwallet.org/feather/feather.git"
 LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS=""
-IUSE="xmrig +xmrto"
+IUSE="qrcode xmrig +xmrto"
 
 DEPEND="
-	dev-libs/boost:=[nls,threads]
+	dev-libs/boost:=[nls]
 	dev-libs/libgcrypt:=
 	dev-libs/libsodium:=
+	dev-libs/libzip:=
 	dev-libs/monero-seed
 	dev-libs/openssl:=
 	>=dev-qt/qtcore-5.15
@@ -33,10 +34,12 @@ DEPEND="
 	media-gfx/qrencode:=
 	net-dns/unbound:=[threads]
 	net-libs/czmq:=
+	qrcode? ( media-gfx/zbar:=[v4l] )
 "
 RDEPEND="
 	${DEPEND}
 	net-vpn/tor
+	xmrig? ( net-misc/xmrig )
 "
 BDEPEND="virtual/pkgconfig"
 
