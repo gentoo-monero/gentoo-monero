@@ -21,8 +21,5 @@
 		<flag name="xmrig">
 			Enable mining support using a user specified xmrig binary
 		</flag>
-		<flag name="xmrto">
-			Enable swaps to Bitcoin using xmr.to
-		</flag>
 	</use>
 </pkgmetadata>
