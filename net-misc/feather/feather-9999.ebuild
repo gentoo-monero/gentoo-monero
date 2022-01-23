@@ -31,6 +31,7 @@ DEPEND="
 	>=dev-qt/qtwidgets-5.15
 	>=dev-qt/qtxml-5.15
 	media-gfx/qrencode:=
+	>=media-gfx/zbar-0.21
 	net-dns/unbound:=[threads]
 	net-libs/czmq:=
 "
