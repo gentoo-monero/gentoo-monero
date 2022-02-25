@@ -56,6 +56,7 @@ src_configure() {
 		-DSTATIC=OFF
 		-DUSE_DEVICE_TREZOR=OFF
 		-DXMRIG=$(usex xmrig)
+		-DWITH_SCANNER=$(usex qrcode)
 	)
 
 	cmake_src_configure
