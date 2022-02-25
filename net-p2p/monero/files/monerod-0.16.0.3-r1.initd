@@ -1,11 +1,12 @@
 #!/sbin/openrc-run
-# Copyright 2020 Gentoo Authors
+# Copyright 2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 pidfile=/var/run/monerod.pid
 command=/usr/bin/monerod
 command_args="${monerod_args}"
 start_stop_daemon_args="-u ${monerod_user} -b -m -p ${pidfile}"
+retry="SIGTERM/30"
 
 name="Monero P2P Daemon"
 description="Connects to the Monero P2P network"
