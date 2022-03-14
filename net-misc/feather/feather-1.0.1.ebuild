@@ -1,7 +1,7 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
@@ -18,19 +18,19 @@ MONERO_DIST_COMIT="6a2b96394d3c81a4ccf9be0daea02afe5f6f3683"
 
 DESCRIPTION="A free, open-source Monero wallet"
 HOMEPAGE="https://featherwallet.org"
-SRC_URI="https://github.com/feather-wallet/feather/archive/refs/tags/${PVR}.tar.gz -> ${PF}.tar.gz
-	https://github.com/feather-wallet/monero/archive/${MONERO_DIST_COMIT}.zip -> ${PF}-monero.zip
-	https://github.com/miniupnp/miniupnp/archive/${MINIUPNP_DIST_COMIT}.zip -> ${PF}-monero-miniupnp.zip
-	https://github.com/tevador/RandomX/archive/${RANDOMX_DIST_COMIT}.zip -> ${PF}-monero-randomx.zip
-	https://github.com/Tencent/rapidjson/archive/${RAPIDJSON_DIST_COMIT}.zip -> ${PF}-monero-rapidjson.zip
-	https://github.com/monero-project/supercop/archive/${SUPERCOP_DIST_COMIT}.zip -> ${PF}-monero-supercop.zip
-	https://github.com/trezor/trezor-common/archive/${TREZORCOMMON_DIST_COMIT}.zip -> ${PF}-monero-trezorcommon.zip
-	https://github.com/monero-project/unbound/archive/${UNBOUND_DIST_COMIT}.zip -> ${PF}-monero-unbound.zip
+SRC_URI="https://github.com/feather-wallet/feather/archive/refs/tags/${PV}.tar.gz -> ${PF}.tar.gz
+	https://github.com/feather-wallet/monero/archive/${MONERO_DIST_COMIT}.tar.gz -> ${PF}-monero.tar.gz
+	https://github.com/miniupnp/miniupnp/archive/${MINIUPNP_DIST_COMIT}.tar.gz -> ${PF}-monero-miniupnp.tar.gz
+	https://github.com/tevador/RandomX/archive/${RANDOMX_DIST_COMIT}.tar.gz -> ${PF}-monero-randomx.tar.gz
+	https://github.com/Tencent/rapidjson/archive/${RAPIDJSON_DIST_COMIT}.tar.gz -> ${PF}-monero-rapidjson.tar.gz
+	https://github.com/monero-project/supercop/archive/${SUPERCOP_DIST_COMIT}.tar.gz -> ${PF}-monero-supercop.tar.gz
+	https://github.com/trezor/trezor-common/archive/${TREZORCOMMON_DIST_COMIT}.tar.gz -> ${PF}-monero-trezorcommon.tar.gz
+	https://github.com/monero-project/unbound/archive/${UNBOUND_DIST_COMIT}.tar.gz -> ${PF}-monero-unbound.tar.gz
 "
 
 # Feather is released under the terms of the BSD license, but it vendors
-# code from Monero and Tor too.
-LICENSE="BSD MIT"
+# code from Monero and Tor too. trezor-common is under LGPLv3.
+LICENSE="BSD LGPL-3.0 MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="qrcode xmrig"
@@ -62,13 +62,13 @@ RDEPEND="
 BDEPEND="virtual/pkgconfig"
 
 src_prepare() {
-	mv -T ${WORKDIR}/monero-${MONERO_DIST_COMIT} ${WORKDIR}/${PF}/monero
-	mv -T ${WORKDIR}/miniupnp-${MINIUPNP_DIST_COMIT} ${WORKDIR}/${PF}/monero/external/miniupnp
-	mv -T ${WORKDIR}/RandomX-${RANDOMX_DIST_COMIT} ${WORKDIR}/${PF}/monero/external/randomx
-	mv -T ${WORKDIR}/rapidjson-${RAPIDJSON_DIST_COMIT} ${WORKDIR}/${PF}/monero/external/rapidjson
-	mv -T ${WORKDIR}/supercop-${SUPERCOP_DIST_COMIT} ${WORKDIR}/${PF}/monero/external/supercop
-	mv -T ${WORKDIR}/trezor-common-${TREZORCOMMON_DIST_COMIT} ${WORKDIR}/${PF}/monero/external/trezor-common
-	mv -T ${WORKDIR}/unbound-${UNBOUND_DIST_COMIT} ${WORKDIR}/${PF}/monero/external/unbound
+	mv -T "${WORKDIR}"/monero-${MONERO_DIST_COMIT} "${WORKDIR}"/${PF}/monero
+	mv -T "${WORKDIR}"/miniupnp-${MINIUPNP_DIST_COMIT} "${WORKDIR}"/${PF}/monero/external/miniupnp
+	mv -T "${WORKDIR}"/RandomX-${RANDOMX_DIST_COMIT} "${WORKDIR}"/${PF}/monero/external/randomx
+	mv -T "${WORKDIR}"/rapidjson-${RAPIDJSON_DIST_COMIT} "${WORKDIR}"/${PF}/monero/external/rapidjson
+	mv -T "${WORKDIR}"/supercop-${SUPERCOP_DIST_COMIT} "${WORKDIR}"/${PF}/monero/external/supercop
+	mv -T "${WORKDIR}"/trezor-common-${TREZORCOMMON_DIST_COMIT} "${WORKDIR}"/${PF}/monero/external/trezor-common
+	mv -T "${WORKDIR}"/unbound-${UNBOUND_DIST_COMIT} "${WORKDIR}"/${PF}/monero/external/unbound
 	cmake_src_prepare
 }
 
