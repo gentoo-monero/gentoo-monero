@@ -3,24 +3,25 @@
 
 EAPI=8
 
-#To prevent confusion with the bitcoin version of p2pool, this ebuild has been named p2pool-monero
-DESCRIPTION="Decentralized pool for Monero mining (Static Binary)"
+#To prevent confusion with the bitcoin version of p2pool, this ebuild
+#has been named p2pool-monero
+DESCRIPTION="Decentralized pool for Monero mining"
 HOMEPAGE="https://p2pool.io https://github.com/SChernykh/p2pool"
 SRC_URI="
 	amd64?   ( https://github.com/SChernykh/p2pool/releases/download/v${PV}/p2pool-v${PV}-linux-x64.tar.gz )
-	aarch64? ( https://github.com/SChernykh/p2pool/releases/download/v${PV}/p2pool-v${PV}-linux-aarch64.tar.gz )
+	arm64? ( https://github.com/SChernykh/p2pool/releases/download/v${PV}/p2pool-v${PV}-linux-aarch64.tar.gz )
 "
 
 LICENSE="BSD GPL-3+ ISC LGPL-3+ MIT"
 SLOT="0"
-KEYWORDS="-* ~amd64 ~arm64 "
+KEYWORDS="-* ~amd64 ~arm64"
 
 src_unpack(){
-	if use "x86" || use "amd64"; then
+	if use "amd64"; then
 		unpack p2pool-v${PV}-linux-x64.tar.gz
 		mv -T "${WORKDIR}"/p2pool-v${PV}-linux-x64 "${S}"
 	fi
-	if use "arm64"; then
+	if use "aarch64"; then
 		unpack p2pool-v${PV}-linux-aarch64.tar.gz
 		mv -T "${WORKDIR}"/p2pool-v${PV}-linux-aarch64 "${S}"
 	fi
