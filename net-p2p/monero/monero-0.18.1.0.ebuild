@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,7 +6,7 @@ EAPI=8
 inherit cmake systemd
 
 MY_MINIUPNP_REV="544e6fcc73c5ad9af48a8985c94f0f1d742ef2e0"
-MY_RANDOMX_REV="9efc398c196ef1c50d8e6f5e1f2c5ac02f1f6ceb"
+MY_RANDOMX_REV="85c527a62301b7b8be89d941020308b1cb92b75c"
 MY_SUPERCOP_REV="633500ad8c8759995049ccd022107d1fa8a1bbc9"
 MY_TREZOR_REV="bff7fdfe436c727982cc553bdfb29a9021b423b0"
 
@@ -48,7 +48,6 @@ RDEPEND="
 BDEPEND="virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0.17.1.3-linkjobs.patch"
 	"${FILESDIR}/${PN}-0.17.1.9-no-git.patch"
 )
 
@@ -72,6 +71,9 @@ src_configure() {
 		-DUSE_CCACHE=OFF
 		-DUSE_DEVICE_TREZOR=$(usex hw-wallet)
 	)
+
+	# Stack trace does not compile on musl libc, disable it for now.
+	use elibc_musl && mycmakeargs+=( -DSTACK_TRACE=OFF )
 
 	cmake_src_configure
 }
