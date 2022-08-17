@@ -72,6 +72,9 @@ src_configure() {
 		-DUSE_DEVICE_TREZOR=$(usex hw-wallet)
 	)
 
+	# Stack trace does not compile on musl libc, disable it for now.
+	use elibc_musl && mycmakeargs+=( -DSTACK_TRACE=OFF )
+
 	cmake_src_configure
 }
 
